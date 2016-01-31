@@ -30,6 +30,8 @@ public class BoardManager : MonoBehaviour {
     public GameObject wallTile;
     public GameObject doorTile;
     private Transform boardHolder; // keeps hierarchy clean
+    public GameObject aztecMan;
+    public GameObject copMan;
 
 	public GameObject people;
 
@@ -40,10 +42,15 @@ public class BoardManager : MonoBehaviour {
     private List<Vector3> freePositions = new List<Vector3>();
     
 
-    private Vector3 topRightCornerPos = new Vector3(32 - 1, 32 - 1);
-    private Vector3 topLeftCornerPos = new Vector3(1, 32 - 1);
-    private Vector3 bottomRightCornerPos = new Vector3(32 - 1, 0);
-    private Vector3 bottomLeftCornerPos = new Vector3(0, 0);
+    private Vector3 topRightCornerPos = new Vector3(20, 2,-1);
+    private Vector3 topLeftCornerPos = new Vector3(1, 32 - 1,-1);
+    private Vector3 bottomRightCornerPos = new Vector3(32 - 1, 0,-1);
+    private Vector3 bottomLeftCornerPos = new Vector3(0, 0,-1);
+
+    private Vector3 westDoor = new Vector3(0 + 1,12/2 );
+    private Vector3 northDoor = new Vector3(31/2, 12 -1 );
+    private Vector3 eastDoor = new Vector3(31 -1, 12/2 );
+    private Vector3 southDoor = new Vector3(31/2, 0 + 1 );
 
 
 
@@ -69,6 +76,11 @@ public class BoardManager : MonoBehaviour {
     {
         // sets up outer wall and floor of the game
         boardHolder = new GameObject("Board").transform;
+        Instantiate(aztecMan, topRightCornerPos, Quaternion.identity);
+        Instantiate(copMan, westDoor, Quaternion.identity);
+        Instantiate(copMan, eastDoor, Quaternion.identity);
+        Instantiate(copMan, southDoor, Quaternion.identity);
+        Instantiate(copMan, northDoor, Quaternion.identity);
 
         for (int x = -1; x < columns + 1; x ++)
         {
@@ -78,16 +90,19 @@ public class BoardManager : MonoBehaviour {
                 //prepares to instantiate a floortile
                 //GameObject toInstantiate = floorTile;
                 GameObject toInstantiate;
-                
+                float instantiateZ;
+
                 if (x == -1 || x == columns || y == -1 || y == rows)
                 {
                     // if the tile is on the outer wall instantiate it as a wall tile instad of a floor tile
                     toInstantiate = wallTile;
+                    instantiateZ = 2f;
                     if ((x == -1 && Math.Abs(y - (rows / 2)) < 1) || (x == columns && Math.Abs(y - (rows / 2)) < 1) ||
                         (y == -1 && Math.Abs(x - (columns / 2)) < 1) || (y == columns && Math.Abs(x - (columns / 2)) < 1))
                     {
                         // these are the spaces on the map where doors should be
                         toInstantiate = doorTile;
+                        instantiateZ = 0f;
                     }
 
                     GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;

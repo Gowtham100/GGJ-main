@@ -22,7 +22,6 @@ public class detection : MonoBehaviour {
 			canMove = false;
 		} else if (other.CompareTag("Player")){
 			playerDetected = true;
-			Debug.Log("Found YOU!!!");
 		}
 
 	}

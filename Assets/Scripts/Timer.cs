@@ -60,7 +60,7 @@ public class Timer : MonoBehaviour {
     private void updateHunger() {
         toHungerCount = hungertime;
         hunger++;
-        Debug.Log(hunger);
+        //Debug.Log(hunger);
         if (hunger == 100)
             gameOver();
         updateRedAndOrange(); //update the visual
@@ -103,7 +103,7 @@ public class Timer : MonoBehaviour {
     private void updateRedAndOrange() {
         redbar.size = hunger * 0.01f;
         float orangeCalc = (hunger - mealPoints) * 0.01f;
-        Debug.Log(orangeCalc);
+       // Debug.Log(orangeCalc);
         if (orangeCalc > 0)
             orangebar.size = orangeCalc;
         else

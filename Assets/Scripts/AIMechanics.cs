@@ -14,6 +14,8 @@ public class AIMechanics : MonoBehaviour {
 	public Vector3 curDirection;
 	public string curDirectionName;
 
+	public GameObject gameManager;
+
 	public float speed;
 	public float dirSpeed;
 	public float pauseLength; //how long
@@ -33,6 +35,7 @@ public class AIMechanics : MonoBehaviour {
 		isPause = false;
 		disableChildRenderer ();
 		this.gameObject.transform.GetChild (convert ("East")).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+		gameManager = GameObject.FindGameObjectWithTag("GameController");
 	}
 	
 	// Update is called once per frame
@@ -165,7 +168,8 @@ public class AIMechanics : MonoBehaviour {
 
 	public void checkPlayer(){
 		if (playerDetected(convert (curDirectionName))){
-			//Debug.Log ("FOUND YOUU!!");
+			gameManager.GetComponent<manageScene>().setAlert();
+			Debug.Log("alert");
 		}
 	}
 

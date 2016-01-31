@@ -78,6 +78,13 @@ public class BoardManager : MonoBehaviour {
                 {
                     // if the tile is on the outer wall instantiate it as a wall tile instad of a floor tile
                     toInstantiate = wallTile;
+                    if ((x == -1 && Math.Abs(y - (rows / 2)) < 1) || (x == columns && Math.Abs(y - (rows / 2)) < 1) ||
+                        (y == -1 && Math.Abs(x - (columns / 2)) < 1) || (y == columns && Math.Abs(x - (columns / 2)) < 1))
+                        // these are the spaces on the map where doors should be
+                        toInstantiate = doorTile;
+                    {
+                        //
+                    }
                 }
 
                 GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
@@ -107,7 +114,8 @@ public class BoardManager : MonoBehaviour {
         Vector3 pos8 = new Vector3(pos.x - 1, pos.y + 1);
         Vector3 pos9 = new Vector3(pos.x + 1, pos.y - 1);
         if (walledGridPositions.Contains(pos) || walledGridPositions.Contains(pos2) || walledGridPositions.Contains(pos3) || walledGridPositions.Contains(pos4) || walledGridPositions.Contains(pos5)
-             || walledGridPositions.Contains(pos6) || walledGridPositions.Contains(pos7) || walledGridPositions.Contains(pos8) || walledGridPositions.Contains(pos9))
+             || walledGridPositions.Contains(pos6) || walledGridPositions.Contains(pos7) || walledGridPositions.Contains(pos8) || walledGridPositions.Contains(pos9)
+             || pos.x < 1 || pos.y < 1 || pos.x > columns - 2 || pos.y > rows - 2)
             return false;
         else
         {
@@ -245,8 +253,9 @@ public class BoardManager : MonoBehaviour {
                 {
                     // flipped horizontally L (x,y) (x-1,y) (x,y-1)(x,y-2) / DONE
                     pos1 = new Vector3(randomPosition.x, randomPosition.y);
+                    pos1Type = 1;
                     pos2 = new Vector3(randomPosition.x - 1, randomPosition.y);
-                    pos2Type = 1;
+                    
                     pos3 = new Vector3(randomPosition.x, randomPosition.y - 1);
                     pos3Type = 1;
                     pos4 = new Vector3(randomPosition.x, randomPosition.y - 2);

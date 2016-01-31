@@ -18,8 +18,8 @@ public class BoardManager : MonoBehaviour {
         }
     }
 
-    public int columns = 32;
-    public int rows = 32;
+    public int columns = 31;
+    public int rows = 12;
     public Count wallCount = new Count(70, 70); // min 5 wells per level max 10
     public int npcMinimum = 5;
     public int npcMaximum = 10;
@@ -73,23 +73,28 @@ public class BoardManager : MonoBehaviour {
             {
                 // these go to cols + 1 because the edge is outside of the outer edge of the screen
                 //prepares to instantiate a floortile
-                GameObject toInstantiate = floorTile;
+                //GameObject toInstantiate = floorTile;
+                GameObject toInstantiate;
+                
                 if (x == -1 || x == columns || y == -1 || y == rows)
                 {
                     // if the tile is on the outer wall instantiate it as a wall tile instad of a floor tile
                     toInstantiate = wallTile;
                     if ((x == -1 && Math.Abs(y - (rows / 2)) < 1) || (x == columns && Math.Abs(y - (rows / 2)) < 1) ||
                         (y == -1 && Math.Abs(x - (columns / 2)) < 1) || (y == columns && Math.Abs(x - (columns / 2)) < 1))
+                    {
                         // these are the spaces on the map where doors should be
                         toInstantiate = doorTile;
-                    {
-                        //
                     }
+
+                    GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+
+                    instance.transform.SetParent(boardHolder);
                 }
 
-                GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                //GameObject instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
 
-                instance.transform.SetParent(boardHolder);
+                //instance.transform.SetParent(boardHolder);
             }
         }
     }
@@ -359,7 +364,7 @@ public class BoardManager : MonoBehaviour {
             {
                 //int randomIndex = Random.Range(0, gridPositions.Count);
                 //Vector3 randomPosition = gridPositions[randomIndex];
-                Vector3 randomPosition = new Vector3(Random.Range(0, 32), Random.Range( 0, 32));
+                Vector3 randomPosition = new Vector3(Random.Range(0, columns), Random.Range( 0, rows));
                 //freePositions.RemoveAt(randomIndex); // removes the floortile in the space to replace it w/ something else
                 npcPosition = randomPosition;
             } while (!freePositions.Contains(npcPosition));

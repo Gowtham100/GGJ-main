@@ -31,6 +31,9 @@ public class BoardManager : MonoBehaviour {
     public GameObject doorTile;
     private Transform boardHolder; // keeps hierarchy clean
 
+	public GameObject people;
+
+
 
     private List<Vector3> gridPositions = new List<Vector3>(); //keeps track of all spots in gameboard
     private List<Vector3> walledGridPositions = new List<Vector3>(); // keeps track of all of the spaces where walls have already been placed
@@ -369,7 +372,8 @@ public class BoardManager : MonoBehaviour {
                 npcPosition = randomPosition;
             } while (!freePositions.Contains(npcPosition));
 
-            Instantiate(npcTile, npcPosition, Quaternion.identity);
+            //Instantiate(npcTile, npcPosition, Quaternion.identity);
+			Instantiate(people, npcPosition, Quaternion.identity);
         }
         
 
